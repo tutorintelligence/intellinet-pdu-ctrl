@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "intellinet-pdu-ctrl"
-version = "0.0.1"
+version = "0.1.0"
 description = "asyncio client library for intellinet pdus"
 authors = ["Josh Gruenstein <josh@tutorintelligence.com>"]
 license = "MIT"
