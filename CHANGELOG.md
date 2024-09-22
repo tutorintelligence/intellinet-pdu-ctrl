@@ -2,6 +2,13 @@
 
 
 
+## v0.3.0 (2024-09-22)
+
+### Feature
+
+* feat: accept client session in constructor ([`457b46d`](https://github.com/tutorintelligence/intellinet-pdu-ctrl/commit/457b46d0bd0346ed4f4b11a60eea10fd43cebebf))
+
+
 ## v0.2.1 (2024-09-22)
 
 ### Fix
