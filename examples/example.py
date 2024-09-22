@@ -1,10 +1,20 @@
-from intellinet_pdu_ctrl.api import IPU, OutletCommand
+import asyncio
+import os
+
+from aiohttp import BasicAuth
+
+from intellinet_pdu_ctrl.api import IPU
+
+
+async def main() -> None:
+    async with IPU(
+        "http://192.168.194.23:50071",
+        auth=BasicAuth(
+            os.environ.get("PDU_USER", "admin"), os.environ.get("PDU_PASS", "admin")
+        ),
+    ) as ipu:
+        print(await ipu.get_status())
+
 
 if __name__ == "__main__":
-    ipu = IPU("192.168.194.23:50071")
-    print(ipu.get_status())
-
-    ipu.set_outlets_state(OutletCommand.POWER_CYCLE_OFF_ON, 3)
-
-    for i in range(100000):
-        print(f"{i}: {ipu.get_status().outlet_states[3]}")
+    asyncio.run(main())
