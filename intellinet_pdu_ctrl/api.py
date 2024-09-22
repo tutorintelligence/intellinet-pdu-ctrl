@@ -7,9 +7,11 @@ from lxml import etree as et
 
 from intellinet_pdu_ctrl.types import (
     AllOutletsConfig,
+    NetworkConfiguration,
     OutletCommand,
     PDUStatus,
     ThresholdsConfig,
+    UserVerifyResult,
 )
 
 
@@ -32,6 +34,8 @@ class IPU:
         session: aiohttp.ClientSession,
     ):
         self.session = session
+
+        assert self.session.auth is not None, "session must have auth set"
 
     async def __aenter__(self) -> "IPU":
         return self
@@ -64,8 +68,7 @@ class IPU:
         )
 
     async def get_status(self) -> PDUStatus:
-        e = await self._get_request(PDUEndpoints.status)
-        return PDUStatus.from_xml(e)
+        return PDUStatus.from_xml(await self._get_request(PDUEndpoints.status))
 
     async def set_outlets_config(self, outlet_configs: AllOutletsConfig) -> None:
         settings = dict[str, Any]()
@@ -77,13 +80,14 @@ class IPU:
         await self._post_request(PDUEndpoints.config_pdu, data=settings)
 
     async def get_outlets_config(self) -> AllOutletsConfig:
-        etree = await self._get_request(PDUEndpoints.config_pdu)
-
-        return AllOutletsConfig.from_xml(etree)
+        return AllOutletsConfig.from_xml(
+            await self._get_request(PDUEndpoints.config_pdu)
+        )
 
     async def get_thresholds_config(self) -> ThresholdsConfig:
-        etree = await self._get_request(PDUEndpoints.thresholds)
-        return ThresholdsConfig.from_xml(etree)
+        return ThresholdsConfig.from_xml(
+            await self._get_request(PDUEndpoints.thresholds)
+        )
 
     async def set_thresholds_config(self, threshold_config: ThresholdsConfig) -> None:
         await self._post_request(
@@ -96,3 +100,34 @@ class IPU:
         outlet_states["submit"] = "Anwenden"
 
         await self._get_request(PDUEndpoints.outlet, params=outlet_states)
+
+    async def set_credentials(self, new_credentials: aiohttp.BasicAuth) -> None:
+        current_credentials = self.session.auth
+        assert current_credentials is not None, "session must have auth set"
+
+        await self._post_request(
+            PDUEndpoints.users,
+            data=dict(
+                oldnm=current_credentials.login,
+                oldpas=current_credentials.password,
+                newnm=new_credentials.login,
+                newpas=new_credentials.password,
+                confirm=new_credentials.password,
+            ),
+        )
+
+        status = await self.get_status()
+
+        assert status.user_verify_result == UserVerifyResult.CREDENTIALS_CHANGED
+
+        self.session._default_auth = new_credentials
+
+    async def get_network_configuration(self) -> NetworkConfiguration:
+        return NetworkConfiguration.from_xml(
+            await self._get_request(PDUEndpoints.network)
+        )
+
+    async def set_network_configuration(
+        self, network_config: NetworkConfiguration
+    ) -> None:
+        await self._post_request(PDUEndpoints.network, data=network_config.to_dict())

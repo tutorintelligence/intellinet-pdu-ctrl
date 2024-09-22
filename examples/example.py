@@ -1,10 +1,10 @@
 import asyncio
 import os
+from dataclasses import replace
 
 from aiohttp import BasicAuth, ClientSession
 
 from intellinet_pdu_ctrl.api import IPU
-from intellinet_pdu_ctrl.types import OutletCommand
 
 
 async def main() -> None:
@@ -16,8 +16,10 @@ async def main() -> None:
             ),
         )
     ) as ipu:
-        await ipu.set_outlets(OutletCommand.ON, 0)
-        print(await ipu.get_status())
+        await ipu.set_network_configuration(
+            replace(await ipu.get_network_configuration(), hostname="robotpdu")
+        )
+        print(await ipu.get_network_configuration())
 
 
 if __name__ == "__main__":

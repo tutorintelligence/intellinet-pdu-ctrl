@@ -115,6 +115,12 @@ class AllOutletsConfig:
         return cls(**config)
 
 
+class UserVerifyResult(Enum):
+    NA = 0
+    CREDENTIALS_CHANGED = 1
+    CREDENTIALS_ERRORED = 2
+
+
 @dataclass(frozen=True)
 class PDUStatus:
     current_amps: float
@@ -122,6 +128,7 @@ class PDUStatus:
     humidity_percent: int
     status: str  # todo: make this an enum
     outlet_states: tuple[OutletState, ...]
+    user_verify_result: UserVerifyResult
 
     @classmethod
     def from_xml(cls, e: et._Element) -> Self:
@@ -134,4 +141,48 @@ class PDUStatus:
                 OutletState(extract_text_from_child(e, "outletStat{}".format(i)))
                 for i in range(0, 8)
             ),
+            user_verify_result=UserVerifyResult(
+                int(extract_text_from_child(e, "userVerifyRes"))
+            ),
         )
+
+
+@dataclass(frozen=True)
+class NetworkConfiguration:
+    hostname: str
+    ip_address: str
+    subnet_mask: str
+    gateway: str
+    enable_dhcp: bool
+    primary_dns_ip: str
+    secondary_dns_ip: str
+
+    @classmethod
+    def from_xml(cls, e: et._Element) -> Self:
+        dhcp_checkbox = cast(list[et._Element], e.xpath("//*[@id='dhcp']"))[0]
+        enable_dhcp = "checked" in dhcp_checkbox.attrib
+
+        return cls(
+            hostname=find_input_value_in_xml(e, "host"),
+            ip_address=find_input_value_in_xml(e, "ip"),
+            subnet_mask=find_input_value_in_xml(e, "mask"),
+            gateway=find_input_value_in_xml(e, "gate"),
+            enable_dhcp=enable_dhcp,
+            primary_dns_ip=find_input_value_in_xml(e, "dns1"),
+            secondary_dns_ip=find_input_value_in_xml(e, "dns2"),
+        )
+
+    def to_dict(self) -> dict[str, str]:
+        data = {
+            "host": self.hostname,
+            "ip": self.ip_address,
+            "mask": self.subnet_mask,
+            "gate": self.gateway,
+            "dns1": self.primary_dns_ip,
+            "dns2": self.secondary_dns_ip,
+        }
+
+        if self.enable_dhcp:
+            data["dhcp"] = "on"
+
+        return data

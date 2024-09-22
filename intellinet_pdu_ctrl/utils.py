@@ -4,7 +4,6 @@ from lxml import etree as et
 
 
 def find_input_value_in_xml(et: et._Element, id: str) -> str:
-    print(type(et))
     xpath = f"//*[@id='{id}']/@value | //*[@name='{id}']/@value"
     result = cast(list[str] | None, et.xpath(xpath))
     if not result:
