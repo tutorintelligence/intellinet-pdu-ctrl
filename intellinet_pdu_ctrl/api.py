@@ -29,12 +29,9 @@ class IPU:
 
     def __init__(
         self,
-        url: str,
-        auth: aiohttp.BasicAuth | None = None,
+        session: aiohttp.ClientSession,
     ):
-        self.url = url
-        self.auth = auth or self.DEFAULT_CREDS
-        self.session = aiohttp.ClientSession(base_url=self.url, auth=self.auth)
+        self.session = session
 
     async def __aenter__(self) -> "IPU":
         return self
