@@ -2,6 +2,13 @@
 
 
 
+## v0.4.0 (2024-09-22)
+
+### Feature
+
+* feat: configuration for network and credentials ([`ad5bdd9`](https://github.com/tutorintelligence/intellinet-pdu-ctrl/commit/ad5bdd991c8f36814cdbf615108c20db853a6a3c))
+
+
 ## v0.3.0 (2024-09-22)
 
 ### Feature
