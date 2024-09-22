@@ -2,6 +2,21 @@
 
 
 
+## v0.2.0 (2024-09-22)
+
+### Chore
+
+* chore: move around types ([`4d75a63`](https://github.com/tutorintelligence/intellinet-pdu-ctrl/commit/4d75a639166f653a5208b427610278f549f0bfe8))
+
+### Feature
+
+* feat: asyncio/aiohttp-ify ([`e3c711e`](https://github.com/tutorintelligence/intellinet-pdu-ctrl/commit/e3c711e6d7b50cd5089c4f379bab7c2184c03d6e))
+
+### Unknown
+
+* Merge branch &#39;main&#39; of github.com:tutorintelligence/intellinet-pdu-ctrl ([`b64ef98`](https://github.com/tutorintelligence/intellinet-pdu-ctrl/commit/b64ef98f780cda82abc31ef016f63f325f8f22f5))
+
+
 ## v0.1.0 (2024-09-22)
 
 ### Feature
