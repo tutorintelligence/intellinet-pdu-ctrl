@@ -2,6 +2,13 @@
 
 
 
+## v0.2.1 (2024-09-22)
+
+### Fix
+
+* fix: minor api cleanup ([`1983874`](https://github.com/tutorintelligence/intellinet-pdu-ctrl/commit/1983874b54517ddf38f7ac4d9f7096498170e94e))
+
+
 ## v0.2.0 (2024-09-22)
 
 ### Chore
