@@ -186,3 +186,37 @@ class NetworkConfiguration:
             data["dhcp"] = "on"
 
         return data
+
+
+@dataclass(frozen=True)
+class SystemConfiguration:
+    product_model: str
+    firmware_version: str
+    mac_address: str
+    system_name: str
+    administrator: str
+    system_location: str
+
+    @classmethod
+    def from_xml(cls, e: et._Element) -> Self:
+        product_model = cast(
+            list[str],
+            e.xpath(
+                "//td[strong[normalize-space(text())='Product model']]/following-sibling::td[1]/text()"
+            ),
+        )[0].strip()
+        firmware_version = cast(
+            list[str],
+            e.xpath(
+                "//td[strong[normalize-space(text())='Firmware version']]/following-sibling::td[1]/text()"
+            ),
+        )[0].strip()
+
+        return cls(
+            product_model=product_model,
+            firmware_version=firmware_version,
+            mac_address=find_input_value_in_xml(e, "mac"),
+            system_name=find_input_value_in_xml(e, "sysnm"),
+            administrator=find_input_value_in_xml(e, "admin"),
+            system_location=find_input_value_in_xml(e, "loc"),
+        )

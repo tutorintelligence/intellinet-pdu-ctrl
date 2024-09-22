@@ -1,6 +1,5 @@
 import asyncio
 import os
-from dataclasses import replace
 
 from aiohttp import BasicAuth, ClientSession
 
@@ -16,9 +15,7 @@ async def main() -> None:
             ),
         )
     ) as ipu:
-        await ipu.set_network_configuration(
-            replace(await ipu.get_network_configuration(), hostname="robotpdu")
-        )
+        print(await ipu.get_system_configuration())
         print(await ipu.get_network_configuration())
 
 

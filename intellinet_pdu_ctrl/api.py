@@ -10,6 +10,7 @@ from intellinet_pdu_ctrl.types import (
     NetworkConfiguration,
     OutletCommand,
     PDUStatus,
+    SystemConfiguration,
     ThresholdsConfig,
     UserVerifyResult,
 )
@@ -131,3 +132,8 @@ class IPU:
         self, network_config: NetworkConfiguration
     ) -> None:
         await self._post_request(PDUEndpoints.network, data=network_config.to_dict())
+
+    async def get_system_configuration(self) -> SystemConfiguration:
+        return SystemConfiguration.from_xml(
+            await self._get_request(PDUEndpoints.system)
+        )
