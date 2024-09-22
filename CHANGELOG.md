@@ -2,6 +2,13 @@
 
 
 
+## v0.5.0 (2024-09-22)
+
+### Feature
+
+* feat: query system configuration ([`c76b091`](https://github.com/tutorintelligence/intellinet-pdu-ctrl/commit/c76b091df0b628aa064f1157ec23bdf8295d06da))
+
+
 ## v0.4.0 (2024-09-22)
 
 ### Feature
