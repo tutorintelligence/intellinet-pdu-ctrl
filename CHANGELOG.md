@@ -2,6 +2,13 @@
 
 
 
+## v0.6.0 (2024-10-05)
+
+### Feature
+
+* feat: udp interface with voltage querying ([`1333f2e`](https://github.com/tutorintelligence/intellinet-pdu-ctrl/commit/1333f2eb78e9ab571b717780101533b71509a6eb))
+
+
 ## v0.5.0 (2024-09-22)
 
 ### Feature
