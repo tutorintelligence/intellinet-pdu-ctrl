@@ -2,6 +2,13 @@
 
 
 
+## v0.7.0 (2024-12-22)
+
+### Feature
+
+* feat: set system configuration ([`3e19156`](https://github.com/tutorintelligence/intellinet-pdu-ctrl/commit/3e191561d3561c2a99db53faf2ff44fd04a46919))
+
+
 ## v0.6.0 (2024-10-05)
 
 ### Feature
