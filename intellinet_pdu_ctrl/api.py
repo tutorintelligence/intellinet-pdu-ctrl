@@ -119,7 +119,9 @@ class IPU:
 
         status = await self.get_status()
 
-        assert status.user_verify_result == UserVerifyResult.CREDENTIALS_CHANGED
+        assert (
+            status.user_verify_result == UserVerifyResult.CREDENTIALS_CHANGED
+        ), f"Credentials were not changed {status.user_verify_result=}"
 
         self.session._default_auth = new_credentials
 
@@ -137,3 +139,8 @@ class IPU:
         return SystemConfiguration.from_xml(
             await self._get_request(PDUEndpoints.system)
         )
+
+    async def set_system_configuration(
+        self, system_config: SystemConfiguration
+    ) -> None:
+        await self._post_request(PDUEndpoints.system, data=system_config.to_dict())

@@ -220,3 +220,11 @@ class SystemConfiguration:
             administrator=find_input_value_in_xml(e, "admin"),
             system_location=find_input_value_in_xml(e, "loc"),
         )
+
+    def to_dict(self) -> dict[str, str]:
+        return {
+            "mac": self.mac_address,
+            "sysnm": self.system_name,
+            "admin": self.administrator,
+            "loc": self.system_location,
+        }
