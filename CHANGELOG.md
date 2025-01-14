@@ -2,6 +2,13 @@
 
 
 
+## v0.8.1 (2025-01-14)
+
+### Fix
+
+* fix: pull current credentials for set_credentials from auth ([`c901ca4`](https://github.com/tutorintelligence/intellinet-pdu-ctrl/commit/c901ca4108aaac06a458681cefb4f2c25f58a035))
+
+
 ## v0.8.0 (2025-01-14)
 
 ### Feature
