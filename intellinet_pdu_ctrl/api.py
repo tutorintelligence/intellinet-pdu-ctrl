@@ -131,7 +131,7 @@ class IPU:
             status.user_verify_result == UserVerifyResult.CREDENTIALS_CHANGED
         ), f"Credentials were not changed {status.user_verify_result=}"
 
-        self.session._default_auth = new_credentials
+        self.auth = new_credentials
 
     async def get_network_configuration(self) -> NetworkConfiguration:
         return NetworkConfiguration.from_xml(
