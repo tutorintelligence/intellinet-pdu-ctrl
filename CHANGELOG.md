@@ -2,6 +2,13 @@
 
 
 
+## v0.8.0 (2025-01-14)
+
+### Feature
+
+* feat: pass auth explicitly to ipu ([`fa7fd87`](https://github.com/tutorintelligence/intellinet-pdu-ctrl/commit/fa7fd87dda1163bf5ffb277ac42ce2906ad19af7))
+
+
 ## v0.7.0 (2024-12-22)
 
 ### Feature
