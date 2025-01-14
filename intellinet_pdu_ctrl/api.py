@@ -33,10 +33,14 @@ class IPU:
     def __init__(
         self,
         session: aiohttp.ClientSession,
+        auth: aiohttp.BasicAuth | None = None,
     ):
         self.session = session
+        self.auth = auth
 
-        assert self.session.auth is not None, "session must have auth set"
+        assert (
+            self.session.auth is not None or self.auth is not None
+        ), "must have auth set"
 
     async def __aenter__(self) -> "IPU":
         return self
@@ -53,7 +57,7 @@ class IPU:
     async def _get_request(
         self, page: PDUEndpoints, params: dict[str, str] | None = None
     ) -> et._Element:
-        async with self.session.get(page.value, params=params) as resp:
+        async with self.session.get(page.value, params=params, auth=self.auth) as resp:
             raw_resp_content = await resp.text()
 
         parser = et.HTML if "html" in raw_resp_content.lower() else et.XML
@@ -66,6 +70,7 @@ class IPU:
             page.value,
             data=data,
             headers={"Content-type": "application/x-www-form-urlencoded"},
+            auth=self.auth,
         )
 
     async def get_status(self) -> PDUStatus:
