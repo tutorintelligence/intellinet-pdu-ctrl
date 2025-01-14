@@ -2,6 +2,13 @@
 
 
 
+## v0.8.2 (2025-01-14)
+
+### Fix
+
+* fix: update creds correctly on set ([`79af8ff`](https://github.com/tutorintelligence/intellinet-pdu-ctrl/commit/79af8ff211c07eb6bef50fe311ab76f6ec4650fb))
+
+
 ## v0.8.1 (2025-01-14)
 
 ### Fix
