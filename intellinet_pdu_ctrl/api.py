@@ -109,6 +109,9 @@ class IPU:
 
     async def set_credentials(self, new_credentials: aiohttp.BasicAuth) -> None:
         current_credentials = self.session.auth
+        if current_credentials is None:
+            current_credentials = self.auth
+
         assert current_credentials is not None, "session must have auth set"
 
         await self._post_request(
