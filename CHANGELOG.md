@@ -2,6 +2,13 @@
 
 
 
+## v0.8.3 (2025-04-10)
+
+### Fix
+
+* fix: Downgrade aiohttp requirement ([`f2c8a52`](https://github.com/tutorintelligence/intellinet-pdu-ctrl/commit/f2c8a522baac8611aa7e5f832a7a875193383788))
+
+
 ## v0.8.2 (2025-01-14)
 
 ### Fix
